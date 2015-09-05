@@ -27,20 +27,23 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                 template: null,
                 controller: 'LogoutCtrl'
             })
-            .state('profile', {
-                url: '/profile',
-                templateUrl: 'partials/profile.html',
-                controller: 'ProfileCtrl',
-                resolve: {
-                    loginRequired: loginRequired
-                }
-            })
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: 'partials/dashboard.html',
                 controller: 'DashboardCtrl',
+                abstract: true,
                 resolve: {
                     loginRequired: loginRequired
+                }
+            })
+            .state('dashboard.profile', {
+                url: '/profile',
+
+                views: {
+                    'dashboardContent': {
+                        templateUrl: 'partials/profile.html',
+                        controller: 'ProfileCtrl'
+                    }
                 }
             });
 

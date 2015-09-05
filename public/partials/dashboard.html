@@ -1,6 +1,6 @@
-<div id="page-wrapper" ng-class="{'open': toggle}" style="margin-top: -25px;" ng-cloak>
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
+    <div id="sidebar-wrapper" style="margin-top: -25px;">
         <ul class="sidebar">
             <li class="sidebar-main">
                 <a ng-click="toggleSidebar()">
@@ -10,12 +10,13 @@
             </li>
             <li class="sidebar-title"><span>NAVIGATION</span></li>
             <li class="sidebar-list">
-                <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+                <a ui-sref="dashboard.profile">My Profile <span class="menu-icon fa fa-tachometer"></span></a>
             </li>
             <li class="sidebar-list">
-                <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+                <a ui-sref="dashboard.profile">My Travels <span class="menu-icon fa fa-table"></span></a>
             </li>
         </ul>
     </div>
     <!-- End Sidebar -->
+    <div ui-view="dashboardContent"></div>
 </div>
