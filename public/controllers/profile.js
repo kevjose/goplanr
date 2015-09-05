@@ -6,15 +6,18 @@ angular.module('MyApp')
                     $scope.user = response.data;
                 })
                 .catch(function (response) {
+                    toastr.clear();
                     toastr.error(response.data.message, response.status);
                 });
         };
         $scope.updateProfile = function () {
             Account.updateProfile($scope.user)
                 .then(function () {
+                    toastr.clear();
                     toastr.success('Profile has been updated');
                 })
                 .catch(function (response) {
+                    toastr.clear();
                     toastr.error(response.data.message, response.status);
                 });
         };

@@ -4,9 +4,11 @@ angular.module('MyApp')
             $auth.signup($scope.user)
                 .then(function () {
                     $location.path('/login');
+                    toastr.clear();
                     toastr.info('You have successfully created a new account');
                 })
                 .catch(function (response) {
+                    toastr.clear();
                     toastr.error(response.data.message);
                 });
         };

@@ -5,6 +5,7 @@ angular.module('MyApp')
         }
         $auth.logout()
             .then(function () {
+                toastr.clear();
                 toastr.info('You have been logged out');
                 $location.path('/');
             });
