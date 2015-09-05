@@ -527,6 +527,7 @@ ul {
     background-color: #FFF;
     overflow: hidden;
     box-shadow: 0 0 1px #CCC;
+    height: auto;
 }
 .post .content
 {
@@ -540,19 +541,19 @@ ul {
 }
 .post .post-img-content
 {
-    height: 196px;
-    position: relative;
+    /*height: 196px;*/
+   /* position: relative;*/
 }
 .post .post-img-content img
 {
-    position: absolute;
+   /* position: absolute;*/
 }
 .post .post-title
 {
-    display: table-cell;
-    vertical-align: bottom;
+    /*display: table-cell;
+    vertical-align: bottom;*/
     z-index: 2;
-    position: relative;
+    /*position: relative;*/
 }
 .post .post-title b
 {
