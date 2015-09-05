@@ -45,6 +45,15 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                         controller: 'ProfileCtrl'
                     }
                 }
+            })
+            .state('dashboard.mytravels', {
+                url: '/mytravels',
+
+                views: {
+                    'dashboardContent': {
+                        templateUrl: 'partials/mytravels.html'
+                    }
+                }
             });
 
         $urlRouterProvider.otherwise('/');
