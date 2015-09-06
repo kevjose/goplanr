@@ -27,6 +27,11 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                 template: null,
                 controller: 'LogoutCtrl'
             })
+            .state('plantravel', {
+                url: '/plantravel',
+                templateUrl: 'partials/plantravel.html',
+                controller: 'PlanTravelCtrl'
+            })
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: 'partials/dashboard.html',

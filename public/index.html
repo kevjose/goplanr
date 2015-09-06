@@ -47,6 +47,13 @@
                 <li><a href="/#/signup">Sign up</a></li>
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/#/plantravel" style="margin: 0px;padding: 0px">
+                        <button type="button" class="btn btn-success btn-outline" style="margin-top: 5%;">
+                            <i class="fa fa-plus"></i>&nbsp;Plan new travel
+                        </button>
+                    </a>
+                </li>
                 <li><a href="/#/logout">Logout</a></li>
             </ul>
         </div>
@@ -77,6 +84,7 @@
 <script src="controllers/logout.js"></script>
 <script src="controllers/profile.js"></script>
 <script src="controllers/navbar.js"></script>
+<script src="controllers/plantravel.js"></script>
 <script src="controllers/dashboard.js"></script>
 <script src="services/account.js"></script>
 
@@ -84,8 +92,8 @@
     $(window).load(function () {
         $(".page-load-spinner").fadeOut("slow");
     })
-    $(document).on('click','.navbar-collapse.in',function(e) {
-        if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+    $(document).on('click', '.navbar-collapse.in', function (e) {
+        if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
             $(this).collapse('hide');
         }
     });
