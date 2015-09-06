@@ -556,41 +556,40 @@ ul {
 /*********************
 * My Travles
 *********************/
-.post
-{
+.post {
     background-color: #FFF;
     overflow: hidden;
     box-shadow: 0 0 1px #CCC;
     height: auto;
 }
-.post .content
-{
+
+.post .content {
     padding: 15px;
 }
-.post .author
-{
+
+.post .author {
     font-size: 11px;
     color: #737373;
     padding: 25px 30px 20px;
 }
-.post .post-img-content
-{
+
+.post .post-img-content {
     /*height: 196px;*/
-   /* position: relative;*/
+    /* position: relative;*/
 }
-.post .post-img-content img
-{
-   /* position: absolute;*/
+
+.post .post-img-content img {
+    /* position: absolute;*/
 }
-.post .post-title
-{
+
+.post .post-title {
     /*display: table-cell;
     vertical-align: bottom;*/
     z-index: 2;
     /*position: relative;*/
 }
-.post .post-title b
-{
+
+.post .post-title b {
     background-color: rgba(51, 51, 51, 0.58);
     display: inline-block;
     margin-bottom: 5px;
@@ -598,3 +597,44 @@ ul {
     padding: 10px 15px;
     margin-top: 5px;
 }
+
+#map {
+    height: 300px;
+    /*width: 500px;
+    box-shadow: 3px 3px 10px gray;
+    float: left;
+    border: 5px solid white;
+    border-radius: 10px;
+    margin-right: 20px;*/
+}
+
+/*#repeat {
+    display: inline;
+}*/
+
+/*
+#country_container {
+    width: 1000px;
+    margin: 13px 3px 3px 0px;
+    text-align: center;
+    width: 85px;
+    padding: 4px;
+    display: inline-table;
+    color: white;
+    background-color: black;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 13px;
+}
+
+#country_container:hover {
+    box-shadow: 0px 0px 10px black;
+    background-color: gray;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+#names {
+    cursor: pointer;
+}*/

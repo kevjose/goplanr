@@ -1,5 +1,8 @@
 <div class="container col-md-offset-3 col-md-6">
     <div class="panel panel-default panel-body">
+        <div id="map"></div>
+        <br/>
+        <hr/>
         <legend><i class="ion-clipboard"></i> Create new travel plan</legend>
         <form name="planTravelForm" method="post" ng-submit="" novalidate>
             <div class="form-group">
@@ -8,6 +11,31 @@
             </div>
             <button class="btn btn-lg btn-success">Create</button>
         </form>
+
+        <table id="form-control">
+            <tr>
+                <td><label>Enter Latitude</label></td>
+                <td><input type="number" ng-model="markerLat"
+                           required=""></td>
+            </tr>
+            <tr>
+                <td><label>Enter Longitude</label></td>
+                <td><input type="number" ng-model="markerLng"
+                           required="" ng-model="defaultLng"></td>
+            </tr>
+            <tr>
+                <td><label>Enter Title</label></td>
+                <td><input type="text" ng-model="infoTitle"
+                           required=""></td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="button"
+                            ng-click="addMarker(markerLat,markerLng,infoTitle)">Add
+                    </button>
+                </td>
+            </tr>
+        </table>
     </div>
 
 </div>
