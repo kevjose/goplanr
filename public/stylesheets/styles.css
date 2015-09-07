@@ -643,7 +643,7 @@ ul {
 }
 
 #status-buttons a {
-    /*color: #FFF;*/
+    color: grey;
     display: inline-block;
     font-size: 20px;
     font-weight: bold;
@@ -657,6 +657,7 @@ ul {
 
 /* active buttons */
 #status-buttons a.active {
+    color:darkcyan;
     text-decoration: none;
     border-bottom: 3px solid darkcyan;
 }
