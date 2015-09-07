@@ -59,6 +59,16 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                         templateUrl: 'partials/mytravels.html'
                     }
                 }
+            })
+            .state('dashboard.mytravels.upcoming', {
+                url: '/upcoming',
+                templateUrl: 'partials/mytravels-upcoming.html'
+            })
+
+            // url will be /form/interests
+            .state('dashboard.mytravels.past', {
+                url: '/past',
+                templateUrl: 'partials/mytravels-past.html'
             });
 
         $urlRouterProvider.otherwise('/');
