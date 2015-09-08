@@ -45,4 +45,45 @@ angular.module('MyApp')
             e.preventDefault();
             google.maps.event.trigger(selectedMarker, 'click');
         }
+        /**
+         * Adding places on map
+         */
+        $scope.place = {
+            name: '',
+            description: ''
+        }
+        $scope.lat = '';
+        $scope.lng = '';
+        $scope.locations = [];
+        $scope.addLocation = function (place) {
+            if ($scope.locations.indexOf(place) == -1) {
+                /**
+                 * get Coordinates
+                 */
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'address': place.name},
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            var latitude = results[0].geometry.location.lat();
+                            var longitude = results[0].geometry.location.lng();
+                            $scope.$apply(function () {
+                                place.lat = latitude;
+                                place.lng = longitude;
+                                $scope.locations.push(place);
+                                console.log($scope.locations);
+                            });
+                        }
+                    }
+                );
+            } else {
+                toastr.clear();
+                toastr.info('Location already exists');
+
+            }
+            $scope.place = {};
+            $scope.lat = '';
+            $scope.lng = '';
+
+        }
+
     });

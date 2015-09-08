@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .directive('googlePlace', function () {
+    .directive('googleplace', function () {
         return {
             require: 'ngModel',
             link: function (scope, element, attrs, model) {

@@ -60,7 +60,7 @@
     </nav>
 </div>
 <div ui-view style="margin-top:75px;margin-bottom: 50px;"></div>
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script>
 <!-- Third-party Libraries -->
 <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -72,11 +72,13 @@
 <script src="vendor/angular-ui-router.js"></script>
 <script src="vendor/angular-toastr.tpls.js"></script>
 <script src="vendor/satellizer.js"></script>
+<script src="vendor/ui-bootstrap.min.js"></script>
 
 <!-- Application Code -->
 <script src="app.js"></script>
 <script src="directives/passwordStrength.js"></script>
 <script src="directives/passwordMatch.js"></script>
+<script src="directives/googlePlace.js"></script>
 <script src="controllers/home.js"></script>
 <script src="controllers/login.js"></script>
 <script src="controllers/signup.js"></script>
