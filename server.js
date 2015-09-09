@@ -48,6 +48,22 @@ userSchema.methods.comparePassword = function (password, done) {
 };
 
 var User = mongoose.model('User', userSchema);
+/**
+ * Travel Model
+ */
+var travelSchema = new mongoose.Schema({
+    title: {type: String, required: true},
+    createdAt: {type: Date, default: Date.now},
+    createdBy:{type: String, required: true},
+    locations: [{
+        name: String,
+        description:String,
+        color: String,
+        lat :String,
+        lng :String
+    }]
+});
+var Travel = mongoose.model('Travel',travelSchema);
 
 mongoose.connect(config.MONGO_URI);
 mongoose.connection.on('error', function (err) {
@@ -180,6 +196,46 @@ app.post('/auth/signup', function (req, res) {
         });
     });
 });
+
+/**
+ * Create Travel
+ */
+app.post('/api/travel/create',ensureAuthenticated, function (req, res) {
+    var travel = new Travel({
+        title: req.body.title,
+        createdBy:req.body.createdBy,
+        locations:req.body.locations
+    });
+    travel.save(function(err,travel){
+        if(err)
+            return res.status(400).send(err);
+        return res.send(travel);
+    });
+});
+
+/**
+ * Fetch travel based on createdBy
+ */
+app.get('/api/travels/:createdBy/my-travels',ensureAuthenticated, function (req, res) {
+    Travel.find({createdBy:req.params.createdBy}, function(err, travel){
+        if(err)
+            return res.status(400).send({message:'no travels found'});
+        return res.send(travel);
+    });
+});
+
+/**
+ * Fetch travel based on _id
+ */
+app.get('/api/travels/:id',ensureAuthenticated, function (req, res) {
+    console.log(req.params.id);
+    Travel.findOne({_id:req.params.id}, function(err, travel){
+        if(err)
+            return res.status(400).send({message:'no such travels found'});
+        return res.send(travel);
+    });
+});
+
 
 /*
  |--------------------------------------------------------------------------

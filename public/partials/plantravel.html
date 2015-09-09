@@ -7,7 +7,7 @@
         <form name="planTravelForm" method="post" ng-submit="" novalidate>
             <div class="form-group">
                 <label class="control-label"><i class="fa fa-plane"></i> Tour name</label>
-                <input type="text" name="name" class="form-control" required/>
+                <input type="text" name="name" ng-model="title" class="form-control" required/>
             </div>
             <a ng-click="isCollapsed = !isCollapsed" class="text-info">+ Add Location</a>
             <hr>
@@ -57,7 +57,7 @@
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-lg btn-success">Create</button>
+            <button class="btn btn-lg btn-success" ng-click="createTravel()">Create</button>
         </form>
         
     </div>

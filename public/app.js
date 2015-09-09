@@ -32,6 +32,14 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                 templateUrl: 'partials/plantravel.html',
                 controller: 'PlanTravelCtrl'
             })
+            .state('travel', {
+                url: '/travels/:id',
+                templateUrl:'partials/travel.html' ,
+                controller: 'TravelCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: 'partials/dashboard.html',

@@ -1,7 +1,50 @@
 angular.module('MyApp')
-    .controller('PlanTravelCtrl', function ($scope, $location, $auth, toastr,TravelService,Account,$state) {
-
+    .controller('TravelCtrl', function ($scope, $stateParams, $state, TravelService,Account) {
+        $scope.isTravelLoading = true;
+        $scope.travel ={};
         $scope.title ='';
+        $scope.locations = [];
+        TravelService.getTravel($stateParams.id)
+            .then(function (response) {
+                console.log(response);
+                $scope.travel =response.data;
+                $scope.title =$scope.travel.title;
+                $scope.locations = $scope.travel.locations;
+                var markers = new Array();
+                // Add the markers and infowindows to the map
+                for (var i = 0; i < $scope.travel.locations.length; i++) {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng($scope.travel.locations[i].lat, $scope.travel.locations[i].lng),
+                        map: map,
+                        icon: 'https://maps.google.com/mapfiles/ms/icons/' + $scope.travel.locations[i].color
+                    });
+                    markers.push(marker);
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent($scope.travel.locations[i].name);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+
+                function autoCenter() {
+                    //  Create a new viewpoint bound
+                    var bounds = new google.maps.LatLngBounds();
+                    //  Go through each...
+                    for (var i = 0; i < markers.length; i++) {
+                        bounds.extend(markers[i].position);
+                    }
+                    //  Fit these bounds to the map
+                    map.fitBounds(bounds);
+                }
+
+                autoCenter();
+                $scope.isTravelLoading = false;
+            })
+            .catch(function (response) {
+                console.log(response);
+
+            });
         /**
          * get user
          * @type {{}}
@@ -42,9 +85,8 @@ angular.module('MyApp')
         }
         $scope.lat = '';
         $scope.lng = '';
-        $scope.locations = [];
         $scope.addLocation = function (place) {
-            if ($scope.locations.indexOf(place) == -1) {
+            if ($scope.travel.locations.indexOf(place) == -1) {
                 /**
                  * get Coordinates
                  */
@@ -57,22 +99,22 @@ angular.module('MyApp')
                             $scope.$apply(function () {
                                 place.lat = latitude;
                                 place.lng = longitude;
-                                $scope.locations.push(place);
-                                console.log($scope.locations);
+                                $scope.travel.locations.push(place);
+                                console.log($scope.travel.locations);
 
 
                                 var markers = new Array();
                                 // Add the markers and infowindows to the map
-                                for (var i = 0; i < $scope.locations.length; i++) {
+                                for (var i = 0; i < $scope.travel.locations.length; i++) {
                                     var marker = new google.maps.Marker({
-                                        position: new google.maps.LatLng($scope.locations[i].lat, $scope.locations[i].lng),
+                                        position: new google.maps.LatLng($scope.travel.locations[i].lat, $scope.travel.locations[i].lng),
                                         map: map,
-                                        icon: 'https://maps.google.com/mapfiles/ms/icons/' + $scope.locations[i].color
+                                        icon: 'https://maps.google.com/mapfiles/ms/icons/' + $scope.travel.locations[i].color
                                     });
                                     markers.push(marker);
                                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                                         return function () {
-                                            infowindow.setContent($scope.locations[i].name);
+                                            infowindow.setContent($scope.travel.locations[i].name);
                                             infowindow.open(map, marker);
                                         }
                                     })(marker, i));
@@ -104,21 +146,4 @@ angular.module('MyApp')
             $scope.lng = '';
 
         }
-        $scope.createTravel = function(){
-            $scope.travel ={
-                title:$scope.title,
-                locations:$scope.locations,
-                createdBy:$scope.user.email
-            }
-            TravelService.createTravel($scope.travel)
-                .then(function (response) {
-                    console.log(response);
-                    return $state.go('travel', {id: response.data._id});
-                })
-                .catch(function (response) {
-                    toastr.clear();
-                    toastr.error(response.data.message, response.status);
-                });
-        }
-
     });

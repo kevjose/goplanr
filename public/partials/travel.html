@@ -1,0 +1,74 @@
+<div class="container col-md-offset-3 col-md-6">
+    <div class="panel panel-default panel-body" style="min-height: 400px;">
+        <div class="loading" ng-show="isTravelLoading">
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+        </div>
+        <div ng-hide="isTravelLoading">
+            <div id="map"></div>
+            <br/>
+            <hr/>
+            <legend><i class="ion-clipboard"></i> Create new travel plan</legend>
+            <form name="planTravelForm" method="post" ng-submit="" novalidate>
+                <div class="form-group">
+                    <label class="control-label"><i class="fa fa-plane"></i> Tour name</label>
+                    <input type="text" name="name" ng-model="title" class="form-control" required/>
+                </div>
+                <a ng-click="isCollapsed = !isCollapsed" class="text-info">+ Add Location</a>
+                <hr>
+                <div collapse="!isCollapsed" class="panel panel-default panel-body">
+                    <div class="form-group">
+                        <label class="control-label"><i class="fa fa-map-marker"></i> Location Name</label>
+                        <input type="text" name="name" class="form-control" ng-model="place.name" googleplace required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"><i class="fa fa-exclamation-circle"></i> Location
+                            Description</label>
+                        <input type="text" name="name" class="form-control" ng-model="place.description"
+                               placeholder="Enter a description or a note" required/>
+                    </div>
+                    <div class="from-group">
+                        <label class="control-label"><i class="fa fa-thumb-tack"></i> Marker on map</label>
+                        <select class="form-control" ng-model="place.color" required>
+                            <option value="">Please select a color for map marker</option>
+                            <option ng-repeat="color in colors" value="{{color.url}}">{{color.name}}</option>
+
+                        </select>
+                    </div>
+                    <br/>
+                    <button class="btn btn-info btn-outline pull-right" style="margin-left: 5px;"
+                            ng-click="addLocation(place);isCollapsed = !isCollapsed;">
+                        <i class="fa fa-plus"></i>&nbsp;
+                        Add Location
+                    </button>
+
+                    <button class="btn btn-warning btn-outline pull-right" ng-click="isCollapsed = !isCollapsed">
+                        Collapse
+                    </button>
+                </div>
+                <div class="table-responsive" ng-show="locations.length>0">
+                    <table class="table">
+                        <legend><i class="fa fa-globe fa-lg"></i>&nbsp;Locations</legend>
+                        <thead>
+                        <tr>
+                            <th width="25%">Name</th>
+                            <th width="75%">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="location in locations">
+                            <td>{{location.name}}</td>
+                            <td>{{location.description}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-lg btn-warning" ng-click="">Update</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
