@@ -104,7 +104,9 @@ angular.module('MyApp')
             $scope.lng = '';
 
         }
+        $scope.isCreatingTravel = false;
         $scope.createTravel = function(){
+            $scope.isCreatingTravel = true;
             $scope.travel ={
                 title:$scope.title,
                 locations:$scope.locations,
