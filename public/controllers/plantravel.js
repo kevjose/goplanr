@@ -1,50 +1,14 @@
 angular.module('MyApp')
     .controller('PlanTravelCtrl', function ($scope, $location, $auth, toastr) {
-        $scope.markerLat = 23.200000;
-        $scope.markerLng = 79.225487;
-        $scope.infoTitle = 'India';
-
-        var india = new google.maps.LatLng($scope.markerLat, $scope.markerLng);
-
-        var mapOptions = {
+        var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
-            center: india,
-            mapTypeId: google.maps.MapTypeId.TERRAIN
-        }
+            center: new google.maps.LatLng(23.200000, 79.225487),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+        });
 
-        $scope.map = new google.maps.Map(document.getElementById('map'),
-            mapOptions);
-
-        $scope.markers = [];
-
-        var infoWindow = new google.maps.InfoWindow();
-
-        $scope.addMarker = function (lat, lng, title) {
-
-            var latLang = new google.maps.LatLng(lat, lng);
-
-            var marker = new google.maps.Marker({
-                map: $scope.map,
-                position: latLang,
-                title: title
-            });
-            marker.content = '<div class="infoWindowContent">'
-                + marker.title + '</div>';
-
-            google.maps.event.addListener(marker, 'click', function () {
-                infoWindow.setContent('<h2>' + marker.title + '</h2>'
-                    + marker.content);
-                infoWindow.open($scope.map, marker);
-            });
-
-            $scope.markers.push(marker);
-
-            $scope.map.setCenter(latLang);
-        };
-        $scope.openInfoWindow = function (e, selectedMarker) {
-            e.preventDefault();
-            google.maps.event.trigger(selectedMarker, 'click');
-        }
+        var infowindow = new google.maps.InfoWindow({
+            maxWidth: 160
+        });
         /**
          * Adding places on map
          */
@@ -71,6 +35,36 @@ angular.module('MyApp')
                                 place.lng = longitude;
                                 $scope.locations.push(place);
                                 console.log($scope.locations);
+
+
+                                var markers = new Array();
+                                // Add the markers and infowindows to the map
+                                for (var i = 0; i < $scope.locations.length; i++) {
+                                    var marker = new google.maps.Marker({
+                                        position: new google.maps.LatLng($scope.locations[i].lat, $scope.locations[i].lng),
+                                        map: map,
+                                    });
+                                    markers.push(marker);
+                                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                        return function () {
+                                            infowindow.setContent($scope.locations[i].name);
+                                            infowindow.open(map, marker);
+                                        }
+                                    })(marker, i));
+                                }
+
+                                function autoCenter() {
+                                    //  Create a new viewpoint bound
+                                    var bounds = new google.maps.LatLngBounds();
+                                    //  Go through each...
+                                    for (var i = 0; i < markers.length; i++) {
+                                        bounds.extend(markers[i].position);
+                                    }
+                                    //  Fit these bounds to the map
+                                    map.fitBounds(bounds);
+                                }
+
+                                autoCenter();
                             });
                         }
                     }
