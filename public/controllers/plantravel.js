@@ -58,9 +58,6 @@ angular.module('MyApp')
                                 place.lat = latitude;
                                 place.lng = longitude;
                                 $scope.locations.push(place);
-                                console.log($scope.locations);
-
-
                                 var markers = new Array();
                                 // Add the markers and infowindows to the map
                                 for (var i = 0; i < $scope.locations.length; i++) {
@@ -114,7 +111,6 @@ angular.module('MyApp')
             }
             TravelService.createTravel($scope.travel)
                 .then(function (response) {
-                    console.log(response);
                     return $state.go('travel', {id: response.data._id});
                 })
                 .catch(function (response) {

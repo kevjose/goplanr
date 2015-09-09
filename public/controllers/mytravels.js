@@ -9,7 +9,6 @@ angular.module('MyApp')
                     $scope.user = response.data;
                     TravelService.getMyTravel(response.data.email)
                         .then(function (response) {
-                            console.log(response);
                             $scope.travels = response.data;
                             $scope.isMyTravelsLoading =false;
                         })
@@ -48,7 +47,6 @@ angular.module('MyApp')
         $scope.deleteTravel =function(id){
             TravelService.deleteTravel(id)
                 .then(function(response){
-                    console.log(response);
                     $scope.isMyTravelsLoading = true;
                     $scope.getProfile();
                 })

@@ -10,7 +10,6 @@ angular.module('MyApp')
         };
 
         $scope.$watch($scope.getWidth, function (newValue, oldValue) {
-            console.log(newValue +" "+oldValue);
             if (newValue >= mobileView) {
                     $scope.toggle = true;
             } else {
@@ -20,7 +19,6 @@ angular.module('MyApp')
         });
 
         $scope.toggleSidebar = function () {
-            console.log($scope.toggle);
             $scope.toggle = !$scope.toggle;
         };
 
