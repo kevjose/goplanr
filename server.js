@@ -228,7 +228,6 @@ app.get('/api/travels/:createdBy/my-travels',ensureAuthenticated, function (req,
  * Fetch travel based on _id
  */
 app.get('/api/travels/:id',ensureAuthenticated, function (req, res) {
-    console.log(req.params.id);
     Travel.findOne({_id:req.params.id}, function(err, travel){
         if(err)
             return res.status(400).send({message:'no such travels found'});
