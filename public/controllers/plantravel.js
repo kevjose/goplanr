@@ -12,10 +12,17 @@ angular.module('MyApp')
         /**
          * Adding places on map
          */
+        $scope.colors = [
+            {name: 'Red',url:'red-dot.png'},
+            {name: 'Green',url:'green-dot.png'},
+            {name: 'Blue',url:'blue-dot.png'}
+        ];
         $scope.place = {
             name: '',
-            description: ''
+            description: '',
+            color:''
         }
+        $scope.place
         $scope.lat = '';
         $scope.lng = '';
         $scope.locations = [];
@@ -43,6 +50,7 @@ angular.module('MyApp')
                                     var marker = new google.maps.Marker({
                                         position: new google.maps.LatLng($scope.locations[i].lat, $scope.locations[i].lng),
                                         map: map,
+                                        icon: 'https://maps.google.com/mapfiles/ms/icons/' + $scope.locations[i].color
                                     });
                                     markers.push(marker);
                                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
