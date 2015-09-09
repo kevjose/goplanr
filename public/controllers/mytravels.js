@@ -26,9 +26,9 @@ angular.module('MyApp')
         $scope.getProfile();
 
         var COLORS = [
-            '#e21400', '#91580f', '#f8a700', '#f78b00',
-            '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
-            '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+            '#e67e22', '#2980b9', '#47A447', '#e67e22',
+            '#2980b9', '#47A447', '#e67e22', '#2980b9',
+            '#47A447', '#47A447', '#e67e22', '#2980b9'
         ];
         //Generate color for the same user.
         $scope.getTitleColor= function(title) {
