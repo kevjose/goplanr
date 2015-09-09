@@ -6,6 +6,12 @@ angular.module('MyApp')
             },
             getTravel: function(id) {
                 return $http.get('/api/travels/'+id);
+            },
+            getMyTravel:function(createdBy){
+                return $http.get('/api/travels/'+createdBy+'/my-travels');
+            },
+            deleteTravel:function(id){
+                return $http.delete('/api/travels/delete/'+id);
             }
         };
     });

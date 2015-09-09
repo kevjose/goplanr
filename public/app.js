@@ -64,7 +64,8 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
 
                 views: {
                     'dashboardContent': {
-                        templateUrl: 'partials/mytravels.html'
+                        templateUrl: 'partials/mytravels.html',
+                        controller:'MyTravelCtrl'
                     }
                 }
             })

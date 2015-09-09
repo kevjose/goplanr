@@ -574,6 +574,9 @@ ul {
 }
 
 .post .post-img-content {
+    margin-top: -20px;
+    min-height: 200px;
+    padding-top: 50px;
     /*height: 196px;*/
     /* position: relative;*/
 }

@@ -236,6 +236,15 @@ app.get('/api/travels/:id',ensureAuthenticated, function (req, res) {
     });
 });
 
+app.delete('/api/travels/delete/:id', function(req, res) {
+    Travel.remove({_id : req.params.id}, function(err, travel) {
+        if (err)
+            return res.status(400).send({message:'error'});
+
+        // get and return all the todos after you create another
+        return res.status(200).send({message:'successfully deleted'});
+    });
+});
 
 /*
  |--------------------------------------------------------------------------

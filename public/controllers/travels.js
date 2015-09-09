@@ -4,6 +4,15 @@ angular.module('MyApp')
         $scope.travel ={};
         $scope.title ='';
         $scope.locations = [];
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: new google.maps.LatLng(23.200000, 79.225487),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+            maxWidth: 160
+        });
         TravelService.getTravel($stateParams.id)
             .then(function (response) {
                 console.log(response);
