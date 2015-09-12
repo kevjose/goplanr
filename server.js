@@ -62,7 +62,13 @@ var travelSchema = new mongoose.Schema({
         lat: String,
         lng: String
     }],
-    travelMates: [String]
+    travelMates: [String],
+    discussions: [{
+        message: {type: String, required: true},
+        createdBy: {type: String, required: true},
+        createdByEmail: {type: String, required: true},
+        createdAt: {type: Date, default: Date.now}
+    }]
 });
 var Travel = mongoose.model('Travel', travelSchema);
 
@@ -78,8 +84,32 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 io.sockets.on('connection', function (socket) {
-    socket.on('send msg', function (data) {
-        io.sockets.in(data.room).emit('get msg', data);
+    socket.on('send msg', function (data,res) {
+        var discussionTosave = {
+            message:data.message,
+            createdBy:data.createdBy,
+            createdByEmail:data.createdByEmail,
+            createdAt:data.createdAt
+        };
+        Travel.findByIdAndUpdate(data.room,
+            {
+                $push: {
+                    "discussions":discussionTosave
+                }
+            },
+            {safe: true, upsert: true},
+            function (err, travel) {
+                if (err) {
+                    console.log(err);
+                    throw err;
+                }else
+                    io.sockets.in(data.room).emit('get msg', data);
+            }
+        );
+        /*User.findById(req.user, function (err, user) {
+         res.send(user);
+         });*/
+        //io.sockets.in(data.room).emit('get msg', data);
     });
     socket.on('room', function (room) {
         socket.join(room);

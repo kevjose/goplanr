@@ -5,11 +5,13 @@ angular.module('MyApp')
         $scope.travel = {};
         $scope.title = '';
         $scope.locations = [];
+        $scope.msgs =[];
 
         TravelService.getTravel($stateParams.id)
             .then(function (response) {
                 console.log(response);
                 $scope.travel = response.data;
+                $scope.msgs = $scope.msgs.concat($scope.travel.discussions);
                 $scope.title = $scope.travel.title;
                 $scope.locations = $scope.travel.locations;
 
