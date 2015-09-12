@@ -1,0 +1,32 @@
+<!--Discussion board demo start-->
+<div class="col-md-8">
+    <div class="panel panel-default panel-body">
+        <div class="well" style="height:70vh;overflow-y: scroll;background-color:white;" scroll-to-bottom="msgs">
+
+            <div class="row" ng-repeat="msg in msgs track by $index">
+                <div class="well pull-right"
+                     style="width: 80%;word-break:keep-all;background-color: #2980b9;;color:white;"
+                     ng-show="msg.createdByEmail === user.email">
+                    <span style="font-weight: bold;">{{msg.createdBy.split(" ")[0]}}</span>&nbsp;
+                    -<span style="font-style: italic;color: #CCCCCC">{{msg.createdAt |date:'medium'}}</span>
+                    <br/>
+                    <span style="font-size: 16px;">{{msg.message}}</span>
+
+                </div>
+                <div class="well pull-left"
+                     style="width: 80%;word-break:keep-all;background-color: #47A447;color:white;"
+                     ng-hide="msg.createdByEmail === user.email">
+                    <span style="font-weight: bold;">{{msg.createdBy.split(" ")[0]}}</span>&nbsp;
+                    -<span style="font-style: italic;color: #CCCCCC">{{msg.createdAt |date:'medium'}}</span>
+                    <br/>
+                    {{msg.message}}
+                </div>
+            </div>
+
+        </div>
+        <form ng-submit="sendMsg()">
+            <input class="form-control" type="text" ng-model="chat.msg"/>
+        </form>
+    </div>
+</div>
+<!--Discussion board demo end-->

@@ -54,16 +54,17 @@ var User = mongoose.model('User', userSchema);
 var travelSchema = new mongoose.Schema({
     title: {type: String, required: true},
     createdAt: {type: Date, default: Date.now},
-    createdBy:{type: String, required: true},
+    createdBy: {type: String, required: true},
     locations: [{
         name: String,
-        description:String,
+        description: String,
         color: String,
-        lat :String,
-        lng :String
-    }]
+        lat: String,
+        lng: String
+    }],
+    travelMates: [String]
 });
-var Travel = mongoose.model('Travel',travelSchema);
+var Travel = mongoose.model('Travel', travelSchema);
 
 mongoose.connect(config.MONGO_URI);
 mongoose.connection.on('error', function (err) {
@@ -71,10 +72,26 @@ mongoose.connection.on('error', function (err) {
 });
 
 var app = express();
+/**
+ * Socket related
+ */
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
+io.sockets.on('connection', function (socket) {
+    socket.on('send msg', function (data) {
+        io.sockets.in(data.room).emit('get msg', data);
+    });
+    socket.on('room', function (room) {
+        socket.join(room);
+    });
+    socket.on('leave-room', function (room) {
+        socket.leave(room);
+    });
+});
 
 app.set('port', process.env.PORT || 3000);
 app.use(cors());
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -200,14 +217,16 @@ app.post('/auth/signup', function (req, res) {
 /**
  * Create Travel
  */
-app.post('/api/travel/create',ensureAuthenticated, function (req, res) {
+app.post('/api/travel/create', ensureAuthenticated, function (req, res) {
     var travel = new Travel({
         title: req.body.title,
-        createdBy:req.body.createdBy,
-        locations:req.body.locations
+        createdBy: req.body.createdBy,
+        locations: req.body.locations,
+        travelMates: req.body.travelMates
     });
-    travel.save(function(err,travel){
-        if(err)
+    console.log(req.body.travelMates);
+    travel.save(function (err, travel) {
+        if (err)
             return res.status(400).send(err);
         return res.send(travel);
     });
@@ -216,10 +235,11 @@ app.post('/api/travel/create',ensureAuthenticated, function (req, res) {
 /**
  * Fetch travel based on createdBy
  */
-app.get('/api/travels/:createdBy/my-travels',ensureAuthenticated, function (req, res) {
-    Travel.find({createdBy:req.params.createdBy}, function(err, travel){
-        if(err)
-            return res.status(400).send({message:'no travels found'});
+app.get('/api/travels/:travelMate/my-travels', ensureAuthenticated, function (req, res) {
+    console.log(req.params.travelMate);
+    Travel.find({travelMates: {"$in": [req.params.travelMate]}}, function (err, travel) {
+        if (err)
+            return res.status(400).send({message: 'no travels found'});
         return res.send(travel);
     });
 });
@@ -227,21 +247,21 @@ app.get('/api/travels/:createdBy/my-travels',ensureAuthenticated, function (req,
 /**
  * Fetch travel based on _id
  */
-app.get('/api/travels/:id',ensureAuthenticated, function (req, res) {
-    Travel.findOne({_id:req.params.id}, function(err, travel){
-        if(err)
-            return res.status(400).send({message:'no such travels found'});
+app.get('/api/travels/:id', ensureAuthenticated, function (req, res) {
+    Travel.findOne({_id: req.params.id}, function (err, travel) {
+        if (err)
+            return res.status(400).send({message: 'no such travels found'});
         return res.send(travel);
     });
 });
 
-app.delete('/api/travels/delete/:id', function(req, res) {
-    Travel.remove({_id : req.params.id}, function(err, travel) {
+app.delete('/api/travels/delete/:id', function (req, res) {
+    Travel.remove({_id: req.params.id}, function (err, travel) {
         if (err)
-            return res.status(400).send({message:'error'});
+            return res.status(400).send({message: 'error'});
 
         // get and return all the todos after you create another
-        return res.status(200).send({message:'successfully deleted'});
+        return res.status(200).send({message: 'successfully deleted'});
     });
 });
 
@@ -250,6 +270,9 @@ app.delete('/api/travels/delete/:id', function(req, res) {
  | Start the Server
  |--------------------------------------------------------------------------
  */
-app.listen(app.get('port'), function () {
+/*app.listen(app.get('port'), function () {
+ console.log('Express server listening on port ' + app.get('port'));
+ });*/
+http.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

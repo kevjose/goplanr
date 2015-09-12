@@ -9,6 +9,24 @@
                 <label class="control-label"><i class="fa fa-plane"></i> Tour name</label>
                 <input type="text" name="name" ng-model="title" class="form-control" required/>
             </div>
+
+            <div class="table-responsive" ng-show="locations.length>0">
+                <table class="table">
+                    <legend><i class="fa fa-globe fa-lg"></i>&nbsp;Locations</legend>
+                    <thead>
+                    <tr>
+                        <th width="25%">Name</th>
+                        <th width="75%">Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="location in locations">
+                        <td>{{location.name}}</td>
+                        <td>{{location.description}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <a ng-click="isCollapsed = !isCollapsed" class="text-info">+ Add Location</a>
             <hr>
             <div collapse="!isCollapsed" class="panel panel-default panel-body">
@@ -39,27 +57,39 @@
                 <button class="btn btn-warning btn-outline pull-right" ng-click="isCollapsed = !isCollapsed">
                     Collapse
                 </button>
+
             </div>
-            <div class="table-responsive" ng-show="locations.length>0">
-                <table class="table">
-                    <legend><i class="fa fa-globe fa-lg"></i>&nbsp;Locations </legend>
-                    <thead>
-                    <tr>
-                        <th width="25%">Name</th>
-                        <th width="75%">Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="location in locations">
-                        <td>{{location.name}}</td>
-                        <td>{{location.description}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <!--Adding new friend-->
+            <legend>Travel Mates</legend>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="travelMate in travelMates">{{travelMate}}
+                    &nbsp;<i class="fa fa-lock pull-right" ng-show="travelMate ===user.email"></i>
+                    <span class="text-info" ng-show="travelMate ===user.email">(admin)</span>
+                </li>
+            </ul>
+            <a ng-click="isCollapsed1 = !isCollapsed1" class="text-info">+ Add Travel Mates</a>
+            <hr/>
+            <div collapse="!isCollapsed1" class="panel panel-default panel-body">
+                <div class="form-group">
+                    <label class="control-label"><i class="fa fa-user-plus"></i>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="travellerEmail" required/>
+                </div>
+                <br/>
+                <button class="btn btn-info btn-outline pull-right" style="margin-left: 5px;"
+                        ng-click="addTravelMate(travellerEmail);isCollapsed1 = !isCollapsed1;travellerEmail='';">
+                    <i class="fa fa-plus"></i>&nbsp;
+                    Add Traveller
+                </button>
+
+                <button class="btn btn-warning btn-outline pull-right" ng-click="isCollapsed1 = !isCollapsed1">
+                    Collapse
+                </button>
             </div>
-            <button class="btn btn-lg btn-success" ng-disabled="isCreatingTravel" ng-click="createTravel()">Create</button>
+            <br/>
+            <button class="btn btn-lg btn-success" ng-disabled="isCreatingTravel" ng-click="createTravel()">Create
+            </button>
         </form>
-        
+
     </div>
 
 </div>

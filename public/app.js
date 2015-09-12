@@ -1,4 +1,17 @@
-angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.router', 'satellizer','ui.bootstrap'])
+angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.router', 'satellizer', 'ui.bootstrap'])
+    .run(function ($rootScope,socket) {
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+                console.log(toState);
+                if(toState.name ==='travel.discussions'){
+                    socket.emit('room',toParams.id);
+                }else if(fromState.name ==='travel.discussions'){
+                    socket.emit('leave-room',fromParams.id);
+                }
+
+            });
+    })
+
     .config(function ($stateProvider, $urlRouterProvider, $authProvider) {
         $stateProvider
             .state('home', {
@@ -34,10 +47,31 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
             })
             .state('travel', {
                 url: '/travels/:id',
-                templateUrl:'partials/travel.html' ,
+                templateUrl: 'partials/travel.html',
                 controller: 'TravelCtrl',
+                abstract: true,
                 resolve: {
                     loginRequired: loginRequired
+                }
+            })
+            .state('travel.overview', {
+                url: '/overview',
+
+                views: {
+                    'travelContent': {
+                        templateUrl: 'partials/travel-overview.html',
+                        controller: 'TravelOverviewCtrl'
+                    }
+                }
+            })
+            .state('travel.discussions', {
+                url: '/discussions',
+
+                views: {
+                    'travelContent': {
+                        templateUrl: 'partials/travel-discussions.html',
+                        controller: 'TravelDiscussionsCtrl'
+                    }
                 }
             })
             .state('dashboard', {
@@ -65,7 +99,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
                 views: {
                     'dashboardContent': {
                         templateUrl: 'partials/mytravels.html',
-                        controller:'MyTravelCtrl'
+                        controller: 'MyTravelCtrl'
                     }
                 }
             })
@@ -145,4 +179,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
             }
             return deferred.promise;
         }
+    })
+    .factory('socket', function ($window) {
+        return io.connect($window.location.href);
     });

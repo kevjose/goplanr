@@ -42,7 +42,7 @@ angular.module('MyApp')
         }
 
         $scope.getTravel = function(id){
-            $state.go('travel', {id:id});
+            $state.go('travel.overview', {id:id});
         }
         $scope.deleteTravel =function(id){
             TravelService.deleteTravel(id)
