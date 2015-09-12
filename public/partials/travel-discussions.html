@@ -4,8 +4,8 @@
         <div class="well" style="height:70vh;overflow-y: scroll;background-color:white;" scroll-to-bottom="msgs">
 
             <div class="row" ng-repeat="msg in msgs track by $index">
-                <div class="well pull-right"
-                     style="width: 80%;word-break:break-all;background-color: #2980b9;;color:white;"
+                <div class="well pull-right col-md-8 col-sm-10"
+                     style="word-break:break-all;background-color: #2980b9;;color:white;"
                      ng-show="msg.createdByEmail === user.email">
                     <span style="font-weight: bold;">{{msg.createdBy.split(" ")[0]}}</span>&nbsp;
                     -<span style="font-style: italic;color: #CCCCCC">{{msg.createdAt |date:'medium'}}</span>
@@ -13,8 +13,8 @@
                     <span style="font-size: 16px;">{{msg.message}}</span>
 
                 </div>
-                <div class="well pull-left"
-                     style="width: 80%;word-break:break-all;background-color: #47A447;color:white;"
+                <div class="well pull-left col-md-8 col-sm-10"
+                     style="word-break:break-all;background-color: #47A447;color:white;"
                      ng-hide="msg.createdByEmail === user.email">
                     <span style="font-weight: bold;">{{msg.createdBy.split(" ")[0]}}</span>&nbsp;
                     -<span style="font-style: italic;color: #CCCCCC">{{msg.createdAt |date:'medium'}}</span>
