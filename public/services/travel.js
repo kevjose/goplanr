@@ -16,7 +16,7 @@ angular.module('MyApp')
             getBus: function (searchObject,properlyFormatted) {
                 var req = {
                     method: 'JSONP',
-                    url: 'http://developer.goibibo.com/api/bus/search/',
+                    url: 'https://developer.goibibo.com/api/bus/search/',
                     params: {
                         callback:'JSON_CALLBACK',
                         app_id: 'f64a6762',
