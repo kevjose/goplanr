@@ -1,7 +1,7 @@
 <!--Discussion board demo start-->
-<div class="col-md-8">
+<div class="col-md-6">
     <div class="panel panel-default panel-body">
-        <div class="well" style="height:70vh;overflow-y: scroll;background-color:white;" scroll-to-bottom="msgs">
+        <div class="well" style="height:70vh;overflow-y: auto;background-color:white;" scroll-to-bottom="msgs">
 
             <div class="row" ng-repeat="msg in msgs track by $index">
                 <div class="well pull-right col-md-8 col-sm-10"
@@ -30,3 +30,63 @@
     </div>
 </div>
 <!--Discussion board demo end-->
+<div class="col-md-6">
+    <div class="panel panel-default panel-body">
+        <div style="height:70vh;overflow: auto;background-color:white;">
+            <legend><i class="ion-clipboard"></i> Search bus</legend>
+            <div class="input-group">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Source" ng-model="searchObject.source">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Destination" ng-model="searchObject.dest">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" ng-model="searchObject.date">
+                </div>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-model="searchTerm" type="button"
+                            ng-click="search();searchObject=''">
+                        Go!
+                    </button>
+                </span>
+            </div>
+            <hr/>
+            <div class="loading" ng-show="isSearching">
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+                <div class="loading-bar"></div>
+            </div>
+            <div ng-hide="isSearching">
+                <div class="text-center text-danger" ng-show="searchResults.length==0">No results to display</div>
+                <div class="table-responsive" ng-hide="searchResults.length==0">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>TravelsName</th>
+                            <th>DepartureTime</th>
+                            <th>ArrivalTime</th>
+                            <th>totalfare</th>
+                            <th>BusType</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="searchResult in searchResults track by $index">
+                            <td>{{$index}}</td>
+                            <td>{{searchResult.TravelsName}}</td>
+                            <td>{{searchResult.DepartureTime}}</td>
+                            <td>{{searchResult.ArrivalTime}}</td>
+                            <td>{{searchResult.fare.totalfare}}</td>
+                            <td>{{searchResult.BusType}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

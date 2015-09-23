@@ -5,7 +5,7 @@ angular.module('MyApp')
         $scope.travel = {};
         $scope.title = '';
         $scope.locations = [];
-        $scope.msgs =[];
+        $scope.msgs = [];
 
         TravelService.getTravel($stateParams.id)
             .then(function (response) {
@@ -52,7 +52,7 @@ angular.module('MyApp')
                 'message': $scope.chat.msg,
                 'room': $stateParams.id,
                 'createdBy': $scope.user.displayName,
-                'createdByEmail':$scope.user.email,
+                'createdByEmail': $scope.user.email,
                 'createdAt': new Date()
             });
             $scope.chat.msg = '';
@@ -63,4 +63,29 @@ angular.module('MyApp')
             $scope.msgs.push(data);
             $scope.$digest();
         });
+        $scope.searchObject = {};
+        $scope.searchResults = [];
+        $scope.isSearching = false;
+        $scope.search = function () {
+            $scope.isSearching = true;
+            var date = new Date($scope.searchObject.date);
+            var properlyFormatted = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2);
+            console.log($scope.searchObject);
+            console.log(properlyFormatted);
+            if ($scope.searchObject.source != null && $scope.searchObject.dest != null && $scope.searchObject.date != null) {
+                TravelService.getBus($scope.searchObject, properlyFormatted)
+                    .then(function (response) {
+                        console.log(response.data.data.onwardflights);
+                        $scope.searchResults = response.data.data.onwardflights;
+                        $scope.isSearching = false;
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                        $scope.isSearching = false;
+                    });
+            } else {
+                $scope.isSearching = false;
+                return;
+            }
+        }
     });
